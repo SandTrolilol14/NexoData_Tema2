@@ -50,5 +50,10 @@ public class Main {
         // TODO (tareas 1 a 3): a partir de aquí, lee los procesos del fichero,
         // simula el algoritmo o algoritmos pedidos y muestra los resultados.
         // Cuando lo tengas, borra el println de arriba y este comentario.
+
+        List<Proceso> misProcesos = LectorCSV.cargarProceso(fichero.toString());
+        for (Proceso p : misProcesos) {
+            System.out.println("Cargando: " + p.getNombre() + " (Llega: " + p.getLlegada() + ", Ráfaga: " + p.getRafaga() + ")");
+        }
     }
 }
