@@ -8,8 +8,11 @@ public abstract class Planificacion {
     List<Proceso> listos = new ArrayList<>();
     Proceso cpu = null;
     int tiempo = 0;
+    int tiempoEnCPU = 0;
 
     protected abstract void elegirProceso();
+
+    protected boolean debeIrse() { return false; }
 
     void simular() {
         while (!pendientes.isEmpty() || !listos.isEmpty() || cpu != null) {
@@ -33,6 +36,10 @@ public abstract class Planificacion {
                 cpu.setEspera(cpu.getRetorno() - cpu.getRafaga());
 
                 cpu = null;
+            } else if (debeIrse()) {
+                cpu.setEstado(EstadoProceso.LISTO);
+                listos.add(cpu);
+                cpu = null;
             }
 
             // elección
@@ -43,6 +50,7 @@ public abstract class Planificacion {
             // ejecución
             if (cpu != null) {
                 cpu.setRestante(cpu.getRestante() -1);
+                tiempoEnCPU++;
             }
 
             tiempo++;

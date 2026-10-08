@@ -62,6 +62,24 @@ public class Main {
 
             System.out.println("Simulación FCFS terminada.");
             System.out.println("El primer proceso en llegar termino en: " + misProcesos.get(0).getFin());
+        } else if (algoritmo.equals("sjf")) {
+            SJF simuladorSJF = new SJF();
+            simuladorSJF.pendientes.addAll(misProcesos);
+            simuladorSJF.simular();
+            System.out.println("Simulación SJF terminada");
+        } else if (algoritmo.equals("rr")) {
+            RR simuladorRR = new RR(quantum);
+            simuladorRR.pendientes.addAll(misProcesos);
+            simuladorRR.simular();
+            System.out.println("Simulador RR terminadp");
+        }
+
+        // métricas finales
+        System.out.println("\n--- MÉTRICAS FINALES ---");
+        System.out.println("Proceso | Llegada | Ráfaga | Fin | Retorno | Espera");
+        for (Proceso p : misProcesos) {
+            System.out.printf("%7s |%7d | %6d | %3d | %7d | %6d\n",
+                    p.getNombre(), p.getLlegada(), p.getRafaga(), p.getFin(), p.getRetorno(), p.getEspera());
         }
     }
 }
