@@ -2,6 +2,7 @@ package planificador;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -50,36 +51,42 @@ public class Main {
         // TODO (tareas 1 a 3): a partir de aquí, lee los procesos del fichero,
         // simula el algoritmo o algoritmos pedidos y muestra los resultados.
         // Cuando lo tengas, borra el println de arriba y este comentario.
-
         List<Proceso> misProcesos = LectorCSV.cargarProceso(fichero.toString());
 
-        if (algoritmo.equals("fcfs")) {
+        if (algoritmo.equals("fcfs") || algoritmo.equals("todos")) {
+            System.out.println("=== FCFS ===");
             FCFS simuladorFCFS = new FCFS();
+            List<Proceso> copia = clonarLista(misProcesos);
+            simuladorFCFS.pendientes.addAll(copia);
+            simuladorFCFS.simular(traza);
+            simuladorFCFS.imprimirResultados(copia);
+        }
 
-            simuladorFCFS.pendientes.addAll(misProcesos);
-
-            simuladorFCFS.simular();
-
-            System.out.println("Simulación FCFS terminada.");
-            System.out.println("El primer proceso en llegar termino en: " + misProcesos.get(0).getFin());
-        } else if (algoritmo.equals("sjf")) {
+        if (algoritmo.equals("sjf") || algoritmo.equals("todos")) {
+            System.out.println("=== SJF ===");
             SJF simuladorSJF = new SJF();
-            simuladorSJF.pendientes.addAll(misProcesos);
-            simuladorSJF.simular();
-            System.out.println("Simulación SJF terminada");
-        } else if (algoritmo.equals("rr")) {
-            RR simuladorRR = new RR(quantum);
-            simuladorRR.pendientes.addAll(misProcesos);
-            simuladorRR.simular();
-            System.out.println("Simulador RR terminadp");
+            List<Proceso> copia = clonarLista(misProcesos);
+            simuladorSJF.pendientes.addAll(copia);
+            simuladorSJF.simular(traza);
+            simuladorSJF.imprimirResultados(copia);
         }
 
-        // métricas finales
-        System.out.println("\n--- MÉTRICAS FINALES ---");
-        System.out.println("Proceso | Llegada | Ráfaga | Fin | Retorno | Espera");
-        for (Proceso p : misProcesos) {
-            System.out.printf("%7s |%7d | %6d | %3d | %7d | %6d\n",
-                    p.getNombre(), p.getLlegada(), p.getRafaga(), p.getFin(), p.getRetorno(), p.getEspera());
+        if (algoritmo.equals("rr") || algoritmo.equals("todos")) {
+            System.out.println("=== Round Robin (q=" + quantum + ") ===");
+            RR simuladorRR = new RR(quantum);
+            List<Proceso> copia = clonarLista(misProcesos);
+            simuladorRR.pendientes.addAll(copia);
+            simuladorRR.simular(traza);
+            simuladorRR.imprimirResultados(copia);
         }
+    }
+
+    // Pega este método clonador justo antes de la ÚLTIMA llave '}' de tu archivo Main
+    public static List<Proceso> clonarLista(List<Proceso> originales) {
+        List<Proceso> copia = new ArrayList<>();
+        for (Proceso p : originales) {
+            copia.add(new Proceso(p.getNombre(), p.getLlegada(), p.getRafaga()));
+        }
+        return copia;
     }
 }

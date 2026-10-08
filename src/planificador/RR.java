@@ -12,7 +12,6 @@ public class RR extends Planificacion{
     protected void elegirProceso() {
         cpu = listos.remove(0);
         cpu.setEstado(EstadoProceso.EJECUCION);
-        tiempoEnCPU = 0;
     }
 
     @Override
