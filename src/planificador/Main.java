@@ -52,8 +52,16 @@ public class Main {
         // Cuando lo tengas, borra el println de arriba y este comentario.
 
         List<Proceso> misProcesos = LectorCSV.cargarProceso(fichero.toString());
-        for (Proceso p : misProcesos) {
-            System.out.println("Cargando: " + p.getNombre() + " (Llega: " + p.getLlegada() + ", Ráfaga: " + p.getRafaga() + ")");
+
+        if (algoritmo.equals("fcfs")) {
+            FCFS simuladorFCFS = new FCFS();
+
+            simuladorFCFS.pendientes.addAll(misProcesos);
+
+            simuladorFCFS.simular();
+
+            System.out.println("Simulación FCFS terminada.");
+            System.out.println("El primer proceso en llegar termino en: " + misProcesos.get(0).getFin());
         }
     }
 }
