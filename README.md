@@ -26,7 +26,7 @@ El diseño se basa en la reutilización de código para evitar duplicar el bucle
 
 ## 4. Verificación
 
-![Resolución manual de verificacion.csv](capturas/verificacion_papel.png)
+![Resolución manual de verificacion.csv](.capturas/verificacion_papel.png)
 
 Al comparar mi resolución manual de `verificacion.csv` con la salida del programa, ambas coinciden en el orden de ejecución y en las métricas, confirmando que las reglas de empates y llegadas simultáneas se aplican correctamente[cite: 6, 9].
 
@@ -51,7 +51,7 @@ Entre los instantes 2 y 5, la CPU se queda ociosa. El proceso X completa su ráf
 5. **Comparativa RR (q=4) vs FCFS:** La espera media de RR (10,50) resulta peor que la de FCFS (10,00). Esto ocurre porque RR obliga a fraccionar la ejecución, provocando que todos los procesos avancen a la vez pero terminen más tarde que si se hubieran ejecutado de forma secuencial completa[cite: 9, 10].
 6. **Estados del SO:** El simulador no utiliza el estado Bloqueado porque solo modela el uso de la CPU. En la realidad, un proceso pasa a Bloqueado cuando necesita realizar una operación de Entrada/Salida (I/O), como escribir en disco o esperar red, cediendo la CPU voluntariamente hasta que el recurso responda[cite: 10]. 
 
-![Estado de los procesos en el Administrador de Tareas](capturas/admin_tareas.png)
+![Estado de los procesos en el Administrador de Tareas](.capturas/admin_tareas.png)
 
 **Recomendación final para NexoData:**
 Para la ejecución nocturna de estos trabajos por lotes, la recomendación técnica es utilizar el algoritmo **SJF (Shortest Job First)**[cite: 4, 10]. Dado que son procesos automáticos (sin usuarios humanos esperando respuesta inmediata en pantalla), priorizamos vaciar la carga del servidor rápidamente y obtener la menor espera media global[cite: 10]. Si el servidor albergara usuarios interactivos durante el día, la recomendación cambiaría a Round Robin para garantizar que ninguna sesión quede "congelada" por el efecto convoy de los trabajos largos[cite: 10].
